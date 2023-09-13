@@ -5,6 +5,7 @@ const initialState = {
   userName: null,
   userEmail: null,
   userImage: null,
+  newsText: "All",
 };
 
 const userSlice = createSlice({
@@ -17,6 +18,9 @@ const userSlice = createSlice({
       state.signedIn = action.payload.signedIn;
       state.userImage = action.payload.userImage;
     },
+    setnewsText: (state, action) => {
+      state.newsText = action.payload.newsText;
+    },
     setUserLogout: (state) => {
       state.userName = null;
       state.userEmail = null;
@@ -28,6 +32,7 @@ const userSlice = createSlice({
 
 export const { setActiveUser, setUserLogout } = userSlice.actions;
 
+export const selectnewsText = (state) => state.user.newsText;
 export const selectUserName = (state) => state.user.userName;
 export const selectuserImage = (state) => state.user.userImage;
 export const selectUserEmail = (state) => state.user.userEmail;
