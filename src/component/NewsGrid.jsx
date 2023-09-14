@@ -3,13 +3,12 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectUserSign, selectnewsText } from "./redux/userSlice";
+import { selectUserSign } from "./redux/userSlice";
 export default function NewsGrid() {
   const navigate = useNavigate();
   const [newsState, setnewsState] = useState([]);
   const userSignedIn = useSelector(selectUserSign);
-  const userNewsText = useSelector(selectnewsText);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const TopUs = () => {
     axios
@@ -37,7 +36,7 @@ export default function NewsGrid() {
     // dispatch(selectnewsText("Tesla"));
     axios
       .get(
-        "https://newsapi.org/v2/everything?q=tesla&from=2023-08-13&sortBy=publishedAt&apiKey=c92f90c58a524bc99f951e284a294078"
+        "https://newsapi.org/v2/everything?q=tesla&from=2023-08-14&sortBy=publishedAt&apiKey=c92f90c58a524bc99f951e284a294078"
       )
       .then((data) => {
         setnewsState(data.data.articles);
@@ -82,7 +81,9 @@ export default function NewsGrid() {
     <div>
       <Navbar />
       <div className="px-10 mt-10">
-        <span className="xl:text-4xl lg:text-3xl text-xl">All News</span>
+        <span className="xl:text-4xl lg:text-3xl text-xl my-auto">
+          All News
+        </span>
         <div className="float-right ">
           <button
             id="dropdownDefaultButton"
@@ -170,7 +171,7 @@ export default function NewsGrid() {
           {"Top News"}
         </span>
       </div>
-      <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 ">
+      <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 shadow-xl bg-slate-100">
         <div className="flex justify-center">
           <div className=" shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 ">
             {newsState ? (

@@ -15,7 +15,7 @@
 #login-buttons {
   width: 50%;
 }
-@media screen and ((max-width: 600px) or (max-height: 1400)) {
+@media screen and ((max-width: 600px)) {
   #login-image {
     display: none;
   }

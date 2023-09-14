@@ -1,8 +1,49 @@
 import React from "react";
 import "./css/Login.css";
-import { Link } from "react-router-dom";
+import { signInWithEmailAndPassword, auth } from "../Firebase";
+import { Link, useNavigate } from "react-router-dom";
 import News from "./images/NEWS.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveUser } from "./redux/userSlice";
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setemail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [err, seterr] = React.useState(false);
+  const error = "Wrong Email or Password";
+
+  const handleSignin = (e) => {
+    console.log(email, password);
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user.email, user.displayName);
+        <div
+          class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+          role="alert"
+        >
+          <span class="font-medium">Success Login</span> Well Done
+        </div>;
+        dispatch(
+          setActiveUser({
+            userNameNormal: email,
+          })
+        );
+        navigate("/news");
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+        seterr(true);
+      });
+    setemail("");
+    setPassword("");
+    seterr(false);
+  };
+
   return (
     <div>
       <section class="gradient-form h-full w-full">
@@ -19,8 +60,22 @@ export default function Login() {
                           We are The NewsDocs Team
                         </h4>
                       </div>
-
-                      <form>
+                      <div className="text-center pb-4 text-base ">
+                        Didn't have a{" "}
+                        <span
+                          className="text-blue-500 cursor-pointer"
+                          onClick={() => {
+                            navigate("/register");
+                          }}
+                        >
+                          account?
+                        </span>
+                      </div>
+                      <form
+                        onSubmit={(e) => {
+                          handleSignin(e);
+                        }}
+                      >
                         <div class="mb-6">
                           <label
                             for="email"
@@ -31,10 +86,19 @@ export default function Login() {
                           <input
                             type="email"
                             id="email"
+                            value={email}
+                            onChange={(e) => {
+                              setemail(e.target.value);
+                            }}
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                             placeholder="name@flowbite.com"
                             required
                           />
+                          {err ? (
+                            <div className="text-red-400">{error}</div>
+                          ) : (
+                            <></>
+                          )}
                         </div>
                         <div class="mb-6">
                           <label
@@ -47,8 +111,17 @@ export default function Login() {
                             type="password"
                             id="password"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                            value={password}
+                            onChange={(e) => {
+                              setPassword(e.target.value);
+                            }}
                             required
                           />
+                          {err ? (
+                            <div className="text-red-400">{error}</div>
+                          ) : (
+                            <></>
+                          )}
                         </div>
 
                         <button

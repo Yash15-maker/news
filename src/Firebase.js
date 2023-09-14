@@ -4,6 +4,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
@@ -25,4 +27,11 @@ const auth = getAuth(app);
 const googleAuthProvider = new GoogleAuthProvider();
 // const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 
-export { auth, googleAuthProvider, signInWithPopup, signOut };
+export {
+  auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  googleAuthProvider,
+  signInWithPopup,
+  signOut,
+};

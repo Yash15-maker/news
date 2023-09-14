@@ -52,14 +52,19 @@ export default function Home() {
       </div>
       <div className="flex" id="login-home">
         <div id="login-image"></div>
-        <div className="flex justify-center" id="login-buttons">
-          <div className="flex flex-col justify-around lg:p-10 my-auto w-full xl:px-20 lg:gap-10 gap-6">
+        <div className="flex justify-center " id="login-buttons">
+          <div className="flex flex-col justify-around lg:p-10 p-0 my-auto w-full xl:px-20 lg:gap-10 gap-6">
             <div className="flex flex-col justify-between gap-10">
               <h1 className="xl:text-4xl lg:text-3xl text-xl w-full tracking-wide text-center">
                 Welcome to News Docs
               </h1>
-              <button className="rounded-full bg-blue-300 p-2 text-base font-bold ">
-                <Link to="/login">Login/Register</Link>
+              <button
+                className="rounded-full bg-blue-300 p-2 text-base font-bold "
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login/Register
               </button>
             </div>
             <div className="flex flex-col justify-between my-auto">
