@@ -24,6 +24,7 @@ export default function NewsGrid() {
       )
       .then((data) => {
         setnewsState(data.data.articles);
+        setSearch("");
       })
       .catch((err) => {
         alert("Request Exceeded Sorry :(");
@@ -104,16 +105,12 @@ export default function NewsGrid() {
         "https://newsapi.org/v2/everything?q=bitcoin&apiKey=c92f90c58a524bc99f951e284a294078"
       )
       .then((data) => {
-        console.log(data.data.articles);
         setnewsState(data.data.articles);
       })
       .catch((err) => {
         alert("Request Exceeded Sorry :(");
       });
   };
-  // if (userSignedIn) {
-  //   navigate("/news");
-  // }
 
   const indexOfLastPage = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPage - postPerPage;
@@ -186,7 +183,6 @@ export default function NewsGrid() {
               <span className="Dropdown-class">News</span>
             </label>
             <input type="checkbox" id="touch" />
-
             <ul class="slide">
               <li>
                 <span onClick={All} style={{ cursor: "pointer" }}>
@@ -219,15 +215,15 @@ export default function NewsGrid() {
       </div>
 
       <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 shadow-xl ">
-        <div className="flex justify-center flex-col">
-          <div className=" shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 mb-10">
+        <div className="flex justify-center ">
+          <div className="shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 mb-10">
             {currentPosts ? (
               currentPosts.map((curr) => {
                 return (
                   <div>
                     <div class="max-w-sm rounded overflow-hidden shadow-lg bg-slate-100">
                       <img
-                        class="w-full h-36 mx-auto"
+                        class="h-40 h-40 mx-auto"
                         src={curr.urlToImage}
                         alt={curr.source.name}
                       />
@@ -235,14 +231,17 @@ export default function NewsGrid() {
                         <div class="font-bold text-xl mb-2 ">{curr.title}</div>
                         <p class="text-gray-700 text-base">{curr.content}</p>
                       </div>
-                      <div class="px-6 pt-4 pb-2 flex justify-center">
+                      <div class="lg:px-6 lg:pt-4 lg:pb-2 flex justify-around px-2">
                         <span
                           onClick={() => {
                             window.open(curr.url, "_blank");
                           }}
-                          class="cursor-pointer inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                          class="cursor-pointer my-auto inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
                         >
                           Read More
+                        </span>
+                        <span className="lg:text-xl text-base my-1">
+                          {curr.publishedAt.split("T")[0]}
                         </span>
                       </div>
                     </div>

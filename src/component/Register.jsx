@@ -36,7 +36,7 @@ export default function Login() {
   return (
     <div>
       <section class="gradient-form h-full w-full">
-        <div class="container h-full p-20 ">
+        <div class="container h-full lg:p-20 px-4">
           <div class="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
             <div class="w-full">
               <div class="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
@@ -64,8 +64,9 @@ export default function Login() {
                         onSubmit={(e) => {
                           handleSignUp(e);
                         }}
+                        className="mb-4"
                       >
-                        <div class="mb-6">
+                        <div class="mb-6 lg:px-10 px-4">
                           <label
                             for="email"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -85,7 +86,7 @@ export default function Login() {
                           />
                         </div>
 
-                        <div class="mb-6">
+                        <div class="mb-6 lg:px-10 px-4">
                           <label
                             for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -103,13 +104,14 @@ export default function Login() {
                             required
                           />
                         </div>
-
-                        <button
-                          type="submit"
-                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                          Sign Up
-                        </button>
+                        <div className="flex justify-center">
+                          <button
+                            type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          >
+                            Sign Up
+                          </button>
+                        </div>
                       </form>
                     </div>
                   </div>
