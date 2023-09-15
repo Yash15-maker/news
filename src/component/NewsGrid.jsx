@@ -15,7 +15,7 @@ export default function NewsGrid() {
   const [postPerPage] = useState(40);
   const [currentPage, setcurrentPage] = useState(1);
   // const dispatch = useDispatch();
-  console.log(userSignedIn);
+
   const search = (e) => {
     e.preventDefault();
     axios
@@ -121,7 +121,7 @@ export default function NewsGrid() {
         >
           Search
         </label>
-        <div class="relative lg:w-96 md:60 w-40">
+        <div class="relative ">
           <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -229,7 +229,7 @@ export default function NewsGrid() {
                 );
               })
             ) : (
-              <div>Loading...</div>
+              <div className="text-black">Loading...</div>
             )}
           </div>
         </div>

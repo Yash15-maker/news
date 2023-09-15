@@ -43,55 +43,59 @@ export default function Navbar() {
       <div className="flex justify-around relative top-0 lg:px-10  lg:py-3 py-1 shadow-xl">
         <span className="lg:text-3xl text-xl font-bold my-auto">NEWS DOCS</span>
 
-        {userNameNormal ? (
+        {userNameNormal && (
           <>
             <span className="my-auto lg:text-xl text-xs">{userNameNormal}</span>
+            <i
+              class="fa-solid fa-right-from-bracket my-auto cursor-pointer"
+              onClick={handleSignoutNormal}
+            ></i>
           </>
-        ) : (
-          <>
-            <div class="relative ml-3">
-              <div>
-                <button
-                  type="button"
-                  class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  id="user-menu-button"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <span class="absolute -inset-1.5"></span>
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src={userImage} alt="" />
-                </button>
-              </div>
+        )}
 
-              <div
-                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-                tabindex="-1"
+        {userName && (
+          <div class="relative ml-3">
+            <div>
+              <button
+                type="button"
+                class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                id="user-menu-button"
+                aria-expanded="false"
+                aria-haspopup="true"
               >
-                <a
-                  href="!#"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-0"
-                >
-                  {userName}
-                </a>
-                <button
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-2"
-                  onClick={handleSignout()}
-                >
-                  Sign out
-                </button>
-              </div>
+                <span class="absolute -inset-1.5"></span>
+                <span class="sr-only">Open user menu</span>
+                <img class="h-8 w-8 rounded-full" src={userImage} alt="" />
+              </button>
             </div>
-          </>
+
+            <div
+              class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="user-menu-button"
+              tabindex="-1"
+            >
+              <a
+                href="!#"
+                class="block px-4 py-2 text-sm text-gray-700"
+                role="menuitem"
+                tabindex="-1"
+                id="user-menu-item-0"
+              >
+                {userName}
+              </a>
+              <button
+                class="block px-4 py-2 text-sm text-gray-700"
+                role="menuitem"
+                tabindex="-1"
+                id="user-menu-item-2"
+                onClick={handleSignout}
+              >
+                Sign out
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
