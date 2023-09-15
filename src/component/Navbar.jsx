@@ -32,20 +32,26 @@ export default function Navbar() {
     signOut(auth)
       .then(() => {
         dispatch(setUserLogout());
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userSign");
         navigate("/");
       })
       .catch((err) => {
         alert(err);
       });
   };
+  const user = localStorage.getItem("userEmail");
+
   return (
     <div>
       <div className="flex justify-around relative top-0 lg:px-10  lg:py-3 py-1 shadow-xl">
         <span className="lg:text-3xl text-xl font-bold my-auto">NEWS DOCS</span>
 
-        {userNameNormal && (
+        {userNameNormal && user && (
           <>
-            <span className="my-auto lg:text-xl text-xs">{userNameNormal}</span>
+            <span className="my-auto lg:text-xl text-xs">
+              {user ? userNameNormal : <></>}
+            </span>
             <i
               class="fa-solid fa-right-from-bracket my-auto cursor-pointer"
               onClick={handleSignoutNormal}
@@ -92,7 +98,7 @@ export default function Navbar() {
                 id="user-menu-item-2"
                 onClick={handleSignout}
               >
-                Sign out
+                Sign Out
               </button>
             </div>
           </div>

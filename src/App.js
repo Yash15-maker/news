@@ -7,6 +7,7 @@ import Register from "./component/Register";
 import NewsGrid from "./component/NewsGrid";
 function App() {
   const [signIn, setsignIn] = React.useState(false);
+  const userSign = localStorage.getItem("userSign");
   return (
     <div className="App">
       <Router>
@@ -17,6 +18,7 @@ function App() {
             element={<Login signIn={signIn} setsignIn={setsignIn} />}
           />
           <Route path="/register" element={<Register />} />
+
           {signIn && <Route path="news" element={<NewsGrid />} />}
         </Routes>
       </Router>
