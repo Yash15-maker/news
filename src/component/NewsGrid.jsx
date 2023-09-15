@@ -24,6 +24,9 @@ export default function NewsGrid() {
       )
       .then((data) => {
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
 
@@ -34,6 +37,9 @@ export default function NewsGrid() {
       )
       .then((data) => {
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
 
@@ -41,11 +47,14 @@ export default function NewsGrid() {
     console.log("1");
     axios
       .get(
-        "https://newsapi.org/v2/everything?q=apple&from=2023-09-12&to=2023-09-12&sortBy=popularity&apiKey=c92f90c58a524bc99f951e284a294078"
+        "https://newsapi.org/v2/everything?q=apple&from=2023-09-14&to=2023-09-14&sortBy=popularity&apiKey=c92f90c58a524bc99f951e284a294078"
       )
       .then((data) => {
         console.log(data.data.articles);
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
 
@@ -53,10 +62,13 @@ export default function NewsGrid() {
     // dispatch(selectnewsText("Tesla"));
     axios
       .get(
-        "https://newsapi.org/v2/everything?q=tesla&from=2023-08-14&sortBy=publishedAt&apiKey=c92f90c58a524bc99f951e284a294078"
+        "https://newsapi.org/v2/everything?q=tesla&from=2023-08-15&sortBy=publishedAt&apiKey=c92f90c58a524bc99f951e284a294078"
       )
       .then((data) => {
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
 
@@ -67,6 +79,9 @@ export default function NewsGrid() {
       )
       .then((data) => {
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
   useEffect(() => {
@@ -77,6 +92,9 @@ export default function NewsGrid() {
       .then((data) => {
         console.log(data.data.articles);
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   }, []);
 
@@ -88,6 +106,9 @@ export default function NewsGrid() {
       .then((data) => {
         console.log(data.data.articles);
         setnewsState(data.data.articles);
+      })
+      .catch((err) => {
+        alert("Request Exceeded Sorry :(");
       });
   };
   // if (userSignedIn) {
@@ -197,14 +218,14 @@ export default function NewsGrid() {
         </div>
       </div>
 
-      <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 shadow-xl bg-slate-100">
+      <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 shadow-xl ">
         <div className="flex justify-center flex-col">
           <div className=" shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 mb-10">
             {currentPosts ? (
               currentPosts.map((curr) => {
                 return (
                   <div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-slate-100">
                       <img
                         class="w-full h-36 mx-auto"
                         src={curr.urlToImage}
