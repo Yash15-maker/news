@@ -4,9 +4,10 @@ import { signInWithEmailAndPassword, auth } from "../Firebase";
 import { Link, useNavigate } from "react-router-dom";
 import News from "./images/NEWS.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveUser } from "./redux/userSlice";
-export default function Login() {
+import { selectUserSign, setActiveUser } from "./redux/userSlice";
+export default function Login({ signIn, setsignIn }) {
   const navigate = useNavigate();
+  const userSigned = useSelector(selectUserSign);
   const dispatch = useDispatch();
   const [email, setemail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -14,12 +15,11 @@ export default function Login() {
   const error = "Wrong Email or Password";
 
   const handleSignin = (e) => {
-    console.log(email, password);
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user.email, user.displayName);
+        setsignIn(true);
         <div
           class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
           role="alert"
@@ -44,6 +44,7 @@ export default function Login() {
     seterr(false);
   };
 
+  console.log(userSigned);
   return (
     <div>
       <section class="gradient-form h-full w-full">

@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./css/News.css";
+// import Pagination from "./Pagination";
 import Navbar from "./Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectUserSign } from "./redux/userSlice";
+import { selectUserSign, selectsearchText } from "./redux/userSlice";
+// import NewsDeopdow from "./NewsDeopdow";
 export default function NewsGrid() {
   const navigate = useNavigate();
+  const [searchText, setSearch] = useState("bbc-news");
   const [newsState, setnewsState] = useState([]);
   const userSignedIn = useSelector(selectUserSign);
+  const [postPerPage] = useState(40);
+  const [currentPage, setcurrentPage] = useState(1);
   // const dispatch = useDispatch();
+  console.log(userSignedIn);
+  const search = (e) => {
+    e.preventDefault();
+    axios
+      .get(
+        `https://newsapi.org/v2/top-headlines?sources=${searchText}&apiKey=c92f90c58a524bc99f951e284a294078`
+      )
+      .then((data) => {
+        setnewsState(data.data.articles);
+      });
+  };
 
   const TopUs = () => {
     axios
@@ -73,109 +90,118 @@ export default function NewsGrid() {
         setnewsState(data.data.articles);
       });
   };
-  if (userSignedIn) {
-    navigate("/news");
-  }
+  // if (userSignedIn) {
+  //   navigate("/news");
+  // }
+
+  const indexOfLastPage = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPage - postPerPage;
+  const currentPosts = newsState.slice(indexOfFirstPost, indexOfLastPage);
+  // const paginate = (pageNumber) => {
+  //   setcurrentPage(pageNumber);
+  // };
 
   return (
     <div>
       <Navbar />
-      <div className="px-10 mt-10">
-        <span className="xl:text-4xl lg:text-3xl text-xl my-auto">
-          All News
+      <div className="lg:py-8 py-6 w-full flex justify-center">
+        <span className="lg:px-36 md:px-24 px-6 xl:text-4xl text-2xl lg:text-3xl font-light">
+          {"Top News"}
         </span>
-        <div className="float-right ">
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="dropdown"
-            class="text-black bg-white-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 border-stone-950 border-2"
-            type="button"
-          >
-            News Categories{" "}
+      </div>
+      <form
+        className="flex justify-center pt-10 my-auto"
+        onSubmit={(e) => {
+          search(e);
+        }}
+      >
+        <label
+          for="default-search"
+          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >
+          Search
+        </label>
+        <div class="relative lg:w-96 md:60 w-40">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
-              class="w-2.5 h-2.5 ml-2.5"
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 10 6"
+              viewBox="0 0 20 20"
             >
               <path
                 stroke="currentColor"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="m1 1 4 4 4-4"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
             </svg>
-          </button>
-
-          <div
-            id="dropdown"
-            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+          </div>
+          <input
+            type="search"
+            id="default-search"
+            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search News..."
+            // value={searchText}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            required
+          />
+          <button
+            type="submit"
+            class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:px-4 md:px-2 px-1 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <ul
-              class="py-2 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownDefaultButton"
-            >
+            Search
+          </button>
+        </div>
+      </form>
+      <div className="px-10 mt-10 flex w-full">
+        <div className="float-right">
+          <nav>
+            <label for="touch">
+              <span className="Dropdown-class">News</span>
+            </label>
+            <input type="checkbox" id="touch" />
+
+            <ul class="slide">
               <li>
-                <span
-                  // href="#"
-                  onClick={All}
-                  class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
+                <span onClick={All} style={{ cursor: "pointer" }}>
                   All
                 </span>
               </li>
               <li>
-                <span
-                  // href="#"
-                  class="block cursor-pointer  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={Tesla}
-                >
+                <span onClick={Tesla} style={{ cursor: "pointer" }}>
                   Tesla
                 </span>
               </li>
               <li>
-                <span
-                  // href="#"
-                  class="block cursor-pointer  px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={Apple}
-                >
-                  Apple News
+                <span onClick={TopUs} style={{ cursor: "pointer" }}>
+                  Us Top
                 </span>
               </li>
               <li>
-                <span
-                  // href="/news"
-                  onClick={Wall}
-                  class="block px-4 cursor-pointer  py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Wall Street Journal
+                <span onClick={Apple} style={{ cursor: "pointer" }}>
+                  Apple
                 </span>
               </li>
               <li>
-                <span
-                  // href="#"
-                  class="block px-4 py-2 cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={TopUs}
-                >
-                  Top in US
+                <span onClick={Wall} style={{ cursor: "pointer" }}>
+                  Wall
                 </span>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
-      <div className="lg:py-16 py-10 w-full flex justify-center">
-        <span className="lg:px-36 md:px-24 px-6 xl:text-4xl text-2xl lg:text-3xl font-light">
-          {"Top News"}
-        </span>
-      </div>
+
       <div className="lg:px-16 xl:px-20 pt-4 lg:pt-8 xl:pt-16 px-6 shadow-xl bg-slate-100">
-        <div className="flex justify-center">
-          <div className=" shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 ">
-            {newsState ? (
-              newsState.map((curr) => {
+        <div className="flex justify-center flex-col">
+          <div className=" shadow-md align-center grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5 mb-10">
+            {currentPosts ? (
+              currentPosts.map((curr) => {
                 return (
                   <div>
                     <div class="max-w-sm rounded overflow-hidden shadow-lg">
@@ -203,9 +229,7 @@ export default function NewsGrid() {
                 );
               })
             ) : (
-              <div>
-                <skeleton />
-              </div>
+              <div>Loading...</div>
             )}
           </div>
         </div>
@@ -214,6 +238,11 @@ export default function NewsGrid() {
   );
 }
 
+// <Pagination
+//   paginate={paginate}
+//   postPerPage={postPerPage}
+//   totalPosts={newsState.length}
+// />
 // <div className="flex flex-col justify-around lg:flex-row">
 //             <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 lg:px-20 px-4 border border-blue-500 hover:border-transparent rounded">
 //               All

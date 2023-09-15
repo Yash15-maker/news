@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut, auth, googleAuthProvider } from "../Firebase";
 import {
@@ -6,6 +6,7 @@ import {
   selectUserName,
   selectuserImage,
   selectuserNameNormal,
+  setActiveUser,
   setUserLogout,
 } from "./redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -27,79 +28,67 @@ export default function Navbar() {
         alert(err);
       });
   };
+  const handleSignoutNormal = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(setUserLogout());
+        navigate("/");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
   return (
     <div>
       <div className="flex justify-around relative top-0 lg:px-10  lg:py-3 py-1 shadow-xl">
-        <span className="lg:text-3xl text-xl font-bold my-auto">NEWS</span>
-        <form>
-          <label
-            for="default-search"
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >
-            Search
-          </label>
-          <div class="relative lg:w-96 md:60 w-40">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg
-                class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="search"
-              id="default-search"
-              class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search News..."
-              required
-            />
-            <button
-              type="submit"
-              class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm lg:px-4 md:px-2 px-1 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Search
-            </button>
-          </div>
-        </form>
+        <span className="lg:text-3xl text-xl font-bold my-auto">NEWS DOCS</span>
+
         {userNameNormal ? (
-          <span className="my-auto lg:text-xl text-xs">{userNameNormal}</span>
+          <>
+            <span className="my-auto lg:text-xl text-xs">{userNameNormal}</span>
+          </>
         ) : (
           <>
-            <div class="relative inline-block text-left">
-              <img src={userImage} alt="picprofile" />
+            <div class="relative ml-3">
+              <div>
+                <button
+                  type="button"
+                  class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  id="user-menu-button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  <span class="absolute -inset-1.5"></span>
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full" src={userImage} alt="" />
+                </button>
+              </div>
+
               <div
-                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
-                aria-labelledby="menu-button"
+                aria-labelledby="user-menu-button"
                 tabindex="-1"
               >
-                <div class="py-1" role="none">
-                  <span>{userName}</span>
-
-                  <form method="POST" action="#" role="none">
-                    <button
-                      type="submit"
-                      class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="menu-item-3"
-                      onClick={handleSignout()}
-                    >
-                      Sign out
-                    </button>
-                  </form>
-                </div>
+                <a
+                  href="!#"
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="user-menu-item-0"
+                >
+                  {userName}
+                </a>
+                <button
+                  class="block px-4 py-2 text-sm text-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="user-menu-item-2"
+                  onClick={handleSignout()}
+                >
+                  Sign out
+                </button>
               </div>
             </div>
           </>

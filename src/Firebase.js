@@ -6,6 +6,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithRedirect,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
@@ -34,4 +35,5 @@ export {
   googleAuthProvider,
   signInWithPopup,
   signOut,
+  signInWithRedirect,
 };

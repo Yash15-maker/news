@@ -1,6 +1,11 @@
 import React from "react";
 import "./css/Home.css";
-import { auth, googleAuthProvider, signInWithPopup } from "../Firebase";
+import {
+  auth,
+  googleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+} from "../Firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -19,7 +24,7 @@ export default function Home() {
   const userSignedIn = useSelector(selectUserSign);
   const handleSignIn = () => {
     console.log(auth);
-    signInWithPopup(auth, googleAuthProvider)
+    signInWithRedirect(auth, googleAuthProvider)
       .then((result) => {
         dispatch(
           setActiveUser({
