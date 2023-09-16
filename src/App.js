@@ -19,7 +19,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
 
-          {signIn && <Route path="news" element={<NewsGrid />} />}
+          {userSign && <Route path="news" element={<NewsGrid />} />}
         </Routes>
       </Router>
     </div>
